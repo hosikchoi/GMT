@@ -56,3 +56,6 @@ def ntl_wasserstein_loss(logits, labels, num_token_values):
     cdf_pred = torch.cumsum(probs, dim=-1)
     cdf_true = torch.cumsum(one_hot, dim=-1)
     return torch.mean(torch.abs(cdf_pred - cdf_true))
+
+
+
