@@ -1,3 +1,31 @@
+# 전체 실행 순서 개요
+1. 환경 설정
+  cd gmt_experiment
+  python -m venv venv
+  source venv/bin/activate     # (Windows: venv\Scripts\activate)
+  pip install -r requirement.txt
+
+2. 데이터 준비 및 토크나이징 (GMT 기반)
+  python main.py \
+    --data ./data/data.csv \
+    --tokenizer_method quantile \
+    --loss wasserstein \
+    --task pretrain+xgboost
+### --tokenizer_method: quantile 또는 gauss_rank 방식 선택
+### --loss: wasserstein 또는 mse 선택
+### --task: pretrain, xgboost, pretrain+xgboost 등
+### gmt_tokenizer.py의 GeneralMeasureTokenizer를 이용하여 수치형 컬럼을 [level-k][u-l] 구조의 토큰으로 변
+
+3. BERT 기반 MLM 사전학습
+### trainer.py 내 GMTTrainer에서 ntl_wasserstein_loss 또는 ntl_mse_loss 기반으로 학습을 수행
+
+4. 임베딩 시각화 (optional)
+  python visualize_embedding.py
+### plot_token_embeddings(model, tokenizer, token_list)를 이용해 tsne로 임베딩 간 L2 거리 시각화
+
+5. Downstream XGBoost 분류기 평가
+  python downstream_xgboost.py --data ./data/data.csv --label_col target
+
 ###
 gmt_experiment/
 ├── data/
