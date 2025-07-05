@@ -24,3 +24,8 @@ def plot_token_embeddings(model, tokenizer, token_list):
     plt.show()
 
     return dist_matrix
+
+"""
+token_list = [f"[level{l:02d}][l{k}]" for l in range(5) for k in range(4)]
+dist_matrix = plot_token_embeddings(model, tokenizer, token_list)
+"""
