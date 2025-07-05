@@ -60,6 +60,16 @@ class GeneralMeasureTokenizer:
         else:
             raise NotImplementedError("Visualization only supported for quantile mode")
 
+    def level_subbin_token(level_idx, subbin_idx, unit_prefix):
+        return f"[level{level_idx:02d}][{unit_prefix}{subbin_idx}]"
+    
+    def tokenize_numerical_column(values, gmt_tokenizer, unit_prefix="l"):
+        gmt_tokenizer.fit(values)
+        bins = gmt_tokenizer.transform(values)
+        tokens = [level_subbin_token(level, level % gmt_tokenizer.num_bins, unit_prefix) for level in bins]
+        return tokens
+
+
 class HuggingfaceGeneralMeasureTokenizer(PreTrainedTokenizer):
     def __init__(self, gmt_tokenizer, **kwargs):
         super().__init__(**kwargs)
