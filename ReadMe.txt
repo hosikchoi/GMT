@@ -1,9 +1,3 @@
-# 환경설정
-cd gmt_experiment
-python -m venv venv
-source venv/bin/activate   # Windows는 venv\Scripts\activate
-pip install -r requirements.txt
-
 ###
 gmt_experiment/
 ├── data/
@@ -27,9 +21,21 @@ python run_gmt_train.py --data data/example.csv --numerical_cols height weight -
 python visualize_embedding.py --token_list "[level01][h3]" "[level02][h5]" "[level03][h7]" "[level04][h9]"
 python downstream_xgboost.py --data data/example.csv --label_col target
 
-# GMT + BERT MLM 학습 실행
-python run_gmt_train.py --data data/example.csv --numerical_cols height weight --unit_prefixes h w
+###################################################################
+# 1. 환경설정
+cd gmt_experiment
+python -m venv venv
+source venv/bin/activate   # Windows는 venv\Scripts\activate
+pip install -r requirements.txt
 
+# 2. GMT + BERT MLM 학습 실행
+python run_gmt_train.py --data data/example.csv --numerical_cols height weight --unit_prefixes h w
+--data: 입력 데이터 CSV 경로
+--numerical_cols: 수치형 컬럼들
+--unit_prefixes: 각 변수에 대응되는 unit prefix (h for height, w for weight)
+
+# 3. 임베딩 시각화 실행
+python visualize_embedding.py --token_list "[level01][h3]" "[level02][h5]" "[level03][h7]" "[level04][h9]"
 
 # XGBoost 다운스트림 평가 
 python downstream_xgboost.py --data data/example.csv --label_col target
