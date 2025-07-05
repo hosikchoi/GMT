@@ -69,7 +69,6 @@ class GeneralMeasureTokenizer:
         tokens = [level_subbin_token(level, level % gmt_tokenizer.num_bins, unit_prefix) for level in bins]
         return tokens
 
-
 class HuggingfaceGeneralMeasureTokenizer(PreTrainedTokenizer):
     def __init__(self, gmt_tokenizer, **kwargs):
         super().__init__(**kwargs)
@@ -91,22 +90,7 @@ class HuggingfaceGeneralMeasureTokenizer(PreTrainedTokenizer):
     def convert_tokens_to_string(self, tokens):
         return ' '.join(tokens)
 
-# losses.py
-import torch
-import torch.nn.functional as F
 
-def ntl_mse_loss(logits, labels, num_token_values):
-    probs = F.softmax(logits, dim=-1)
-    expected_value = torch.sum(probs * num_token_values, dim=-1)
-    true_value = num_token_values[labels]
-    return F.mse_loss(expected_value, true_value)
-
-def ntl_wasserstein_loss(logits, labels, num_token_values):
-    probs = F.softmax(logits, dim=-1)
-    one_hot = F.one_hot(labels, num_classes=num_token_values.shape[0]).float()
-    cdf_pred = torch.cumsum(probs, dim=-1)
-    cdf_true = torch.cumsum(one_hot, dim=-1)
-    return torch.mean(torch.abs(cdf_pred - cdf_true))
 
 
 
