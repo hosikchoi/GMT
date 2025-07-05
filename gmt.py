@@ -38,7 +38,45 @@ class GeneralMeasureTokenizer:
             return bin_centers[tokens]
         elif self.method == 'gauss_rank':
             raise NotImplementedError("Inverse transform not defined for Gauss-rank")
+            
+    def token2value(self, token):
+        return self.inverse_transform(np.array([token]))[0]
+    
+    def value2token(self, value):
+        return self.transform(np.array([value]))[0]
+    
+    def decode_row(self, token_row):
+        return self.inverse_transform(np.array(token_row))
 
+    def visualize_bins(self):
+        if self.method == 'quantile':
+            plt.figure(figsize=(8, 2))
+            plt.hist(self.bin_edges[:-1], bins=self.bin_edges, edgecolor='k')
+            plt.title("Quantile-based Bins")
+            plt.show()
+        else:
+            raise NotImplementedError("Visualization only supported for quantile mode")
+
+class HuggingfaceGeneralMeasureTokenizer(PreTrainedTokenizer):
+    def __init__(self, gmt_tokenizer, **kwargs):
+        super().__init__(**kwargs)
+        self.gmt = gmt_tokenizer
+
+    def _tokenize(self, text):
+        try:
+            x = float(text)
+            return [f"<num_{self.gmt.value2token(x):02d}>"]
+        except ValueError:
+            return text.split()
+
+    def _convert_token_to_id(self, token):
+        return hash(token) % 10000
+
+    def _convert_id_to_token(self, index):
+        return f"<num_{index}>"
+
+    def convert_tokens_to_string(self, tokens):
+        return ' '.join(tokens)
 
 # losses.py
 import torch
