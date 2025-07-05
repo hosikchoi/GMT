@@ -73,5 +73,24 @@ def train_t5_model(train_dataset, eval_dataset, model_path='t5-small', output_di
     )
     trainer.train()
     return model
+from transformers import Trainer
+from wasserstein_loss import ntl_wasserstein_loss
+
+class GMTTrainer(Trainer):
+    def compute_loss(self, model, inputs, return_outputs=False):
+        labels = inputs.pop("labels")
+        outputs = model(**inputs)
+        logits = outputs.logits
+
+        num_token_values = torch.arange(logits.size(-1), device=logits.device).float()
+        loss = ntl_wasserstein_loss(logits.view(-1, logits.size(-1)), labels.view(-1), num_token_values)
+
+        return (loss, outputs) if return_outputs else loss
+
+
+
+
+
+
 
 
