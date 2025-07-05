@@ -1,3 +1,10 @@
+# 환경설정
+cd gmt_experiment
+python -m venv venv
+source venv/bin/activate   # Windows는 venv\Scripts\activate
+pip install -r requirements.txt
+
+###
 gmt_experiment/
 ├── data/
 │   └── example.csv                  # 실험용 CSV 데이터
