@@ -15,6 +15,7 @@ class GeneralMeasureTokenizer:
         self.num_bins = num_bins
         self.bin_edges = None
         self.gauss_params = None
+        self.fitted = False
 
     def fit(self, x):
         x = np.asarray(x)
@@ -23,8 +24,10 @@ class GeneralMeasureTokenizer:
         elif self.method == 'gauss_rank':
             ranks = stats.rankdata(x)
             self.gauss_params = stats.norm.ppf((ranks - 0.5) / len(x))
+        self.fitted = True
 
     def transform(self, x):
+        assert self.fitted, "Tokenizer must be fit first."
         x = np.asarray(x)
         if self.method == 'quantile':
             return np.digitize(x, self.bin_edges[1:-1])
