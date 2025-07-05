@@ -1,7 +1,9 @@
 ###
 gmt_experiment/
 ├── data/
-│   └── example.csv                  # 실험용 CSV 데이터
+│   └── example.csv                 # 실험용 CSV 데이터
+├── results/
+│   └── logs/, chekpoints           # 결과 저장 폴더
 ├── gmt_tokenizer_extended.py       # GMT 계층적 토크나이저
 ├── wasserstein_loss.py             # Wasserstein Loss 함수
 ├── trainer.py                  # GMTTrainer 클래스 정의
