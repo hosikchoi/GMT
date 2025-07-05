@@ -76,6 +76,9 @@ def train_t5_model(train_dataset, eval_dataset, model_path='t5-small', output_di
 from transformers import Trainer
 from wasserstein_loss import ntl_wasserstein_loss
 
+################################################################
+#
+################################################################
 class GMTTrainer(Trainer):
     def compute_loss(self, model, inputs, return_outputs=False):
         labels = inputs.pop("labels")
