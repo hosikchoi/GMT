@@ -1,0 +1,15 @@
+# 히스토그램 시각화
+fig, ax = plt.subplots(figsize=(10, 5))
+n, bins, patches = ax.hist(slogp_values, bins=bin_edges, edgecolor='black', color='skyblue')
+
+# 각 bin에 GMT-style label 달기 (x축 아래)
+for i in range(num_bins):
+    bin_center = (bin_edges[i] + bin_edges[i+1]) / 2
+    ax.text(bin_center, -5, bin_labels[i], ha='center', fontsize=9, rotation=45)
+
+ax.set_title("Histogram of SlogP (Equal-width Binning in GMT-style)")
+ax.set_xlabel("SlogP")
+ax.set_ylabel("Frequency")
+ax.set_ylim(bottom=-10)  # 아래 공간 확보
+plt.tight_layout()
+plt.show()
