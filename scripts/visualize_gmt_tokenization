@@ -13,3 +13,55 @@ ax.set_ylabel("Frequency")
 ax.set_ylim(bottom=-10)  # 아래 공간 확보
 plt.tight_layout()
 plt.show()
+
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul  9 00:35:17 2025
+
+@author: User
+"""
+
+import matplotlib.pyplot as plt
+
+# 노드 좌표 설정 (수동 배치)
+nodes = {
+    "x₁": (0, 3),
+    "[x₁_level1]": (-2, 2),
+    "[x₁_level2]": (2, 2),
+    "[x₁_level1][l1]": (-3, 1),
+    "[x₁_level1][l2]": (-1, 1),
+    "[x₁_level2][l1]": (1, 1),
+    "[x₁_level2][l2]": (3, 1),
+}
+
+# 엣지 정의
+edges = [
+    ("x₁", "[x₁_level1]"),
+    ("x₁", "[x₁_level2]"),
+    ("[x₁_level1]", "[x₁_level1][l1]"),
+    ("[x₁_level1]", "[x₁_level1][l2]"),
+    ("[x₁_level2]", "[x₁_level2][l1]"),
+    ("[x₁_level2]", "[x₁_level2][l2]"),
+]
+
+# 트리 시각화
+fig, ax = plt.subplots(figsize=(8, 5))
+
+# 노드 그리기
+for label, (x, y) in nodes.items():
+    ax.text(x, y, label, fontsize=10, ha='center', va='center',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='black'))
+
+# 엣지 그리기
+for parent, child in edges:
+    x0, y0 = nodes[parent]
+    x1, y1 = nodes[child]
+    ax.plot([x0, x1], [y0, y1], 'k-', lw=1)
+
+ax.set_xlim(-4, 4)
+ax.set_ylim(0.5, 3.5)
+ax.axis('off')
+plt.title("GMT Hierarchical Tree for x₁", fontsize=12)
+plt.tight_layout()
+plt.show()
+
