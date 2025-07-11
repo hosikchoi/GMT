@@ -1,0 +1,14 @@
+```yaml
+cff-version: 1.2.0
+message: "If you use this GMT codebase, please cite it using the metadata below."
+title: "General Measure Tokens for Numeric Values in Tabular Data"
+authors:
+  - family-names: Choi
+    given-names: Hosik
+    affiliation: University of Seoul
+date-released: 2025-07-12
+version: 0.0.1
+license: MIT
+repository-code: https://github.com/hosikchoi/GMT
+url: https://github.com/hosikchoi/GMT
+doi: 10.5281/zenodo.1234567  # (optional, if registered)
