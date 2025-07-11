@@ -22,3 +22,16 @@ def ntl_wasserstein_loss(logits, labels, num_token_values):
     cdf_true = torch.cumsum(one_hot, dim=-1)
     return torch.mean(torch.abs(cdf_pred - cdf_true))
 
+def masked_wasserstein_loss(logits, target, mask):
+    """
+    logits: (B, T, V)
+    target: (B, T)
+    mask: (B, T) boolean
+    """
+    B, T, V = logits.shape
+    probs = F.softmax(logits, dim=-1)
+    target_onehot = F.one_hot(target, V).float()
+    cdf_pred = torch.cumsum(probs, dim=-1)
+    cdf_true = torch.cumsum(target_onehot, dim=-1)
+    w1 = torch.abs(cdf_pred - cdf_true).sum(dim=-1)
+    return (w1 * mask).sum() / mask.sum()
