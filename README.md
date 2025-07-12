@@ -23,7 +23,11 @@ The proposed scheme enables:
 ## Project Structure
 GMT/
 ├── gmt/ # Core GMT module (tokenizer, embeddings)
+|
 ├── scripts/ # Training and evaluation scripts
+|
 ├── data/ # Sample or synthetic datasets
+|
 ├── run_all.py # Integrated experiment pipeline
+|
 └── README.md
