@@ -8,7 +8,7 @@ def run(title, command):
         exit(1)
 
 if __name__ == "__main__":
-    print("\n🚀 Starting full experiment pipeline...\n")
+    print("\n Starting full experiment pipeline...\n")
 
     # Step 1: Data generation
     run("Step 1: Generate synthetic data", "python data/generate_data.py")
