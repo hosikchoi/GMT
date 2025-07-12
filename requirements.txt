@@ -7,3 +7,4 @@ seaborn
 numpy
 pandas
 xgboost
+git+https://github.com/KevinZhoutianyi/FoNE.git
