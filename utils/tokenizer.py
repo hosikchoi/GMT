@@ -12,6 +12,9 @@ def histogram_tokenizer(values, n_bins=50):
     return np.digitize(scaled, bins) - 1
 
 def fourier_embedding(values, max_power=2):
+    """
+    FoNE-style Fourier embedding (단순 버전)
+    """
     # max_power=2 → periods = [10^0, 10^1, 10^2]
     output = []
     for i in range(max_power + 1):
@@ -19,3 +22,12 @@ def fourier_embedding(values, max_power=2):
         output.append(np.cos(2 * np.pi * values / T))
         output.append(np.sin(2 * np.pi * values / T))
     return np.stack(output, axis=1).T  # shape = (len(values), 2 * (max_power + 1))
+
+#def fourier_embedding_numpy(x, max_power=2):
+#    x = np.array(x).reshape(-1, 1)
+#    features = []
+#    for i in range(max_power):
+#        Ti = 10 ** i
+#        features.append(np.cos(2 * np.pi * x / Ti))
+#        features.append(np.sin(2 * np.pi * x / Ti))
+#    return np.concatenate(features, axis=1)
