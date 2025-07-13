@@ -2,21 +2,24 @@ import os
 import pandas as pd
 import argparse
 
-def main(method: str, n_trials: int = 20, data_size: int = 1e2, n_bins: int = 10):
+def main(method: str, n_trials: int = 20, data_size: int = 1e2, n_bins: int = 10, max_power: int = 2):
     scores = []
 
     print(f" Running {n_trials} experiments for method: {method}")
 
     for r in range(n_trials):
         # 데이터발생
-        exec_path = f"python -m data.generate_data --data_size={data_size} \
-                          --random_seed={r}"
+        exec_path = f"python -m data.generate_data --data_size={data_size} --random_seed={r}"
         os.system(exec_path)
         print("*************************************")
         
         # 실행
-        exec_path = f"python -m experiments.train_{method} --data_size={data_size} \
+        if method != "fone":
+            exec_path = f"python -m experiments.train_{method} --data_size={data_size} \
                           --random_seed={r} --n_bins={n_bins}"
+        else:
+            exec_path = f"python -m experiments.train_{method} --data_size={data_size} \
+                          --random_seed={r} --max_power={max_power}"            
         result = os.popen(exec_path).read()
         
         # R² 추출
@@ -50,6 +53,7 @@ if __name__ == "__main__":
     parser.add_argument("--n_trials", type=int, default=20, help="Number of repeated runs (default: 20)")
     parser.add_argument("--data_size", type=int, default=1e2, help="Size of data (default: 1e2)")
     parser.add_argument("--n_bins", type=int, default=10, help="Number of bins (default: sqrt(n))")
+    parser.add_argument("--max_power", type=int, default=2, help="max_power (default: 2)")
 
     args = parser.parse_args()
     main(method=args.method, n_trials=args.n_trials, data_size = args.data_size, n_bins=args.n_bins)
