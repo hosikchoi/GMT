@@ -39,5 +39,3 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     run_fone(max_power_value=args.max_power_value, random_state_value=args.random_state_value)
-    
-
