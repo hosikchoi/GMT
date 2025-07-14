@@ -1,3 +1,7 @@
+###############################################################################################
+#BertForSequenceClassificationWithNumeric: 텍스트 + 수치형 입력을 받아 분류를 수행하는 통합 모델
+#DataCollatorForNumericMLM: 수치형 입력이 포함된 MLM pretraining용 데이터 콜레이터
+###############################################################################################
 # BertForSequenceClassificationWithNumeric
 class BertForSequenceClassificationWithNumeric(BertPreTrainedModel):
     def __init__(self, config, gmt_embedder, numeric_cols):
