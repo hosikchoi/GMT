@@ -66,6 +66,17 @@ class GMTNumericEmbedder(nn.Module):
 #numeric_cols = ['x1', 'x2']
 ## GMT embedder 초기화
 #gmt_embedder = GMTNumericEmbedder(K=2, L=10, emb_dim=32, return_format="string")
+#또는 
+#embedder = GMTNumericEmbedder(K=2, L=10, emb_dim=32)
+#numeric_emb = embedder(df, ['x1', 'x2'])  # → (batch, 2, 32)
+
+
+
+
+
+
+
+
 ## embedding vector 추출
 #numeric_embeds = gmt_embedder(df, numeric_cols)  # shape = (1000, 2, 32)
 
