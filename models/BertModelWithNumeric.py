@@ -62,3 +62,33 @@ class BertModelWithNumeric(BertPreTrainedModel):
             "pooled_output": pooled_output,
             "attention_mask": attention_mask
         }
+
+#from transformers import BertConfig, BertTokenizer
+#config = BertConfig()
+#tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+## 텍스트 토큰화
+#text_batch = ["this is example", "another input"]
+#encoding = tokenizer(text_batch, return_tensors="pt", padding=True)
+
+## 수치형 입력 예시
+#import pandas as pd
+#df_numerics = pd.DataFrame({
+#    "x1": [12.5, 7.2],
+#    "x2": [101.3, 98.1]
+#})
+## GMT numeric embedder
+#gmt_embedder = GMTNumericEmbedder(K=2, L=10, emb_dim=config.hidden_size, return_format="string")
+#numeric_cols = ["x1", "x2"]
+
+## 통합 모델
+#model = BertModelWithNumeric(config, gmt_embedder, numeric_cols)
+## forward
+#output = model(
+#    input_ids=encoding["input_ids"],
+#    attention_mask=encoding["attention_mask"],
+#    df_numerics=df_numerics
+#)
+#print(output["last_hidden_state"].shape)  # (batch, total_seq_len, hidden)
+
+
+
