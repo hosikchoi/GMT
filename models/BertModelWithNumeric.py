@@ -91,4 +91,3 @@ class BertModelWithNumeric(BertPreTrainedModel):
 #print(output["last_hidden_state"].shape)  # (batch, total_seq_len, hidden)
 
 
-
